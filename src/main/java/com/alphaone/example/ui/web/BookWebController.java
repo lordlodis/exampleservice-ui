@@ -20,8 +20,12 @@ public class BookWebController {
 	
 	@GetMapping
 	public String getBooks(Model model) {
-		List<Book> books = bookService.findAll();
-		model.addAttribute("books", books);
+		try {
+			List<Book> books = bookService.findAll();
+			model.addAttribute("books", books);
+		} catch (Throwable t) {
+			model.addAttribute("error", t.getMessage());
+		}
 		return "books";
 	}	
 }

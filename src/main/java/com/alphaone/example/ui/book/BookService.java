@@ -2,11 +2,22 @@ package com.alphaone.example.ui.book;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+/**
+ * Service APIs that communicate with Book microservice REST API to access data.
+ * 
+ * Service can communicate with each other via direct URL (testing) or using discovery service (EurekaServer)
+ * 
+ * @author Ngoc
+ *
+ */
 @Service
 public class BookService {
 	
@@ -16,7 +27,11 @@ public class BookService {
 	 * @return
 	 */
 	public List<Book> findAll() {
-		return Arrays.asList(new Book(1, "Dummy Title", "Dummy Author"));
+		// FIXME: This does not work. Need to look into it and EUREKA (Spring cloud)
+		ResponseEntity<Book[]> response = new RestTemplate().getForEntity(
+				"http://localhost:9090/api/books", Book[].class);
+		
+		return Arrays.stream(response.getBody()).collect(Collectors.toList());
 	}
 
 	/**
