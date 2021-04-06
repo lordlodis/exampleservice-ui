@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exampleservice-ui
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      bb: ui
+  template:
+    metadata:
+      labels:
+        bb: ui
+    spec:
+      containers:
+      - name: ui-site
+        image: exampleservice-ui:0.0.1-SNAPSHOT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    bb: ui
+  ports:
+  - port: 9090
+    targetPort: 9090
+    nodePort: 30091
