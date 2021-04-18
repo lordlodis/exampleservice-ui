@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alphaone.example.ui.book.model.Book;
-import com.alphaone.example.ui.book.service.BookServiceImpl;
+import com.alphaone.example.ui.book.service.BookService;
 
 @Controller
 @RequestMapping("/books")
@@ -20,7 +20,7 @@ public class BookWebController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BookWebController.class);
 	
 	@Autowired
-	private BookServiceImpl bookService;
+	private BookService bookService;
 	
 	@GetMapping
 	public String getBooks(Model model) {
