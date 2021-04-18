@@ -8,15 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.alphaone.example.ui.book.Book;
-import com.alphaone.example.ui.book.BookService;
+import com.alphaone.example.ui.book.model.Book;
+import com.alphaone.example.ui.book.service.BookServiceImpl;
 
 @Controller
 @RequestMapping("/books")
 public class BookWebController {
 	
 	@Autowired
-	private BookService bookService;
+	private BookServiceImpl bookService;
 	
 	@GetMapping
 	public String getBooks(Model model) {

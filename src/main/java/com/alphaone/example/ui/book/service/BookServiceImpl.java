@@ -1,14 +1,20 @@
-package com.alphaone.example.ui.book;
+package com.alphaone.example.ui.book.service;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import com.alphaone.example.ui.book.model.Book;
 
 /**
  * Service APIs that communicate with Book microservice REST API to access data.
@@ -19,17 +25,22 @@ import org.springframework.web.client.RestTemplate;
  *
  */
 @Service
-public class BookService {
+public class BookServiceImpl {
 	
-	private static Logger LOGGER = LoggerFactory.getLogger(BookService.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(BookServiceImpl.class);
+	
+	private static final String SERVICE_BOOK = "book-service";
+	
+	@Autowired
+	private DiscoveryClient discoveryClient;
 	
 	/**
 	 * @return
 	 */
 	public List<Book> findAll() {
-		// FIXME: This does not work. Need to look into it and EUREKA (Spring cloud)
+		
 		ResponseEntity<Book[]> response = new RestTemplate().getForEntity(
-				"http://localhost:9090/api/books", Book[].class);
+				serviceUrl(), Book[].class);
 		
 		return Arrays.stream(response.getBody()).collect(Collectors.toList());
 	}
@@ -42,4 +53,12 @@ public class BookService {
 		return new Book(1, "Dummy Title", "Dummy Author");
 	}
 
+	private URI serviceUrl() {
+		List<ServiceInstance> instances = discoveryClient.getInstances(SERVICE_BOOK);
+		if (instances != null && instances.size() > 0) {
+			return instances.get(0).getUri();
+		}
+		
+		return null;
+	}
 }

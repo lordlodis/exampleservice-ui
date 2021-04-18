@@ -1,4 +1,4 @@
-package com.alphaone.example.ui.book;
+package com.alphaone.example.ui.book.model;
 
 public class Book {
 	
