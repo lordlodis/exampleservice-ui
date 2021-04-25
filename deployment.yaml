@@ -35,6 +35,6 @@ spec:
   selector:
     bb: ui
   ports:
-  - port: 9090
-    targetPort: 9090
+  - port: 9091
+    targetPort: 9091
     nodePort: 30091

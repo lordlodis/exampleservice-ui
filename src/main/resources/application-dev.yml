@@ -5,4 +5,8 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
-    
+
+     
+feign:
+  book:
+    url: http://localhost:9090/

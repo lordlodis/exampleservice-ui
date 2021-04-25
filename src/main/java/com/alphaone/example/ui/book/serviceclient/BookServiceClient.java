@@ -14,7 +14,7 @@ import com.alphaone.example.ui.book.model.Book;
  * @author Ngoc
  *
  */
-@FeignClient(value = "book-service")
+@FeignClient(value = "book-service", url = "${feign.book.url}")
 public interface BookServiceClient {
 
 	/**
