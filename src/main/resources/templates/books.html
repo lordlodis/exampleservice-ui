@@ -6,16 +6,20 @@
 	</head>
 	<body>
 		<h1>Welcome to Books management</h1>
-		<table border="1">
-			<tr>
-				<td>Book title</td>
-				<td>Author</td>
-			</tr>
-			<tr th:each="book: ${books}">
-				<td th:text="${book.title}"></td>
-				<td th:text="${book.author}"></td>
-			</tr>
-		</table>
-		<h3 th:text="${error}"></h3>
+	<table border="1">
+		<tr>
+			<td>Book title</td>
+			<td>Author</td>
+			<td>Rating</td>
+			<td></td>
+		</tr>
+		<tr th:each="book: ${books}">
+			<td th:text="${book.title}"></td>
+			<td th:text="${book.author}"></td>
+			<td th:text="${book.rating}"></td>
+			<td><button onclick="">Rate</button></td>
+		</tr>
+	</table>
+	<h3 th:text="${error}"></h3>
 	</body>
 </html>
